@@ -47,8 +47,7 @@ The checksum after the max_pool is 720978944.000000
 
 #define PADDING         1
 #define STRIDE          2
-#define POOL_WIDTH      3
-#define POOL_HEIGHT     3
+#define POOL_SIZE      3
 
 ```
 
