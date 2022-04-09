@@ -2,9 +2,6 @@
 #include "pooling_plus_add_layer.h"
 #include <float.h>
 
-///////////////////////////////////////////////////////////////////////////////
-//                  Create Image in CPU memory                               //
-///////////////////////////////////////////////////////////////////////////////
 
 void forward_maxpool_plus_add_fusion_layer(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, double *src1_pointer, double *src2_pointer, double *dst_pointer)
 {
