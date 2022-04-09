@@ -54,7 +54,7 @@ The checksum after the max_pool is 725745664.000000
 - [x] # OpenMP :tada:
 - [x] # op fusion :tada:
 - [x] # Unit Test (need to add more unit test) :tada:
-- [ ] # cuda extension :tada:
+- [x] # cuda extension :tada:
 - [ ] # backward
 - [ ] # SIMD
 - [ ] # cache locality  
