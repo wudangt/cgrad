@@ -59,6 +59,26 @@ The max_pooling op and an element-wise add op are fused and implemented in two w
 | Seconds | 0.140381 sec| 0.037699 sec |0.000044 sec |
 
 As you can see from the time dimension, the CUDA C version is more than eight thousand times faster than the C version with openMP, and C with openMP is more than three times faster than the pure C version.
+
+Similarly, the performance of the c version of the program can be analysis via gprof：
+```python
+cgrad$ gprof cgrad gmon.out -p
+Flat profile:
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total
+ time   seconds   seconds    calls  Ts/call  Ts/call  name
+ 72.78      0.16     0.16                             forward_maxpool_plus_add_fusion_layer
+ 13.65      0.19     0.03                             validate_src_data
+  9.10      0.21     0.02                             initial_src1
+  4.55      0.22     0.01                             print_max_pool_plus_add_checksum
+  0.00      0.22     0.00        1     0.00     0.00  forward_maxpool_plus_add_fusion_layer_kernel(int, int, int, int, int, int, int,                                double*, double*, double*)
+  0.00      0.22     0.00        1     0.00     0.00  __device_stub__Z44forward_maxpool_plus_add_fusion_layer_kerneliiiiiiiPdS_S_(int                               , int, int, int, int, int, int, double*, double*, double*)
+  0.00      0.22     0.00        1     0.00     0.00  __sti____cudaRegisterAll()
+  0.00      0.22     0.00        1     0.00     0.00  cuda_gridsize
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+```
   ### Features
 - [x] # Forward :tada:
 - [x] # OpenMP :tada:
