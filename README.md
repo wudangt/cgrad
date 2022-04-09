@@ -49,7 +49,15 @@ The checksum after the max_pool is 725745664.000000
 #define POOL_HEIGHT     3
 
 ```
-### Features
+### Perfomance analysis
+The max_pooling op and an element-wise add op are fused and implemented in two way：C and CUDA C, where the C version is accelerated by openMP. The runtimes of the different versions of the implementation are as follows:
+
+| \ | C  | C (openMP)  |CUDA C  |
+| :-----: | :-: | :-: |:-: |
+| Seconds | 0.140381 sec| 0.037699 sec |0.000044 sec |
+
+As you can see from the time dimension, the CUDA C version is more than eight thousand times faster than the C version with openMP, and C with openMP is more than three times faster than the pure C version.
+  ### Features
 - [x] # Forward :tada:
 - [x] # OpenMP :tada:
 - [x] # op fusion :tada:
