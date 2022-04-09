@@ -21,11 +21,13 @@ make
 ```python
 |>>>>>>------scr1 data with size=[32,64,112,112]--------<<<<<<|
 |>>>>>>------scr2 data with size=[32,1,56,56]--------<<<<<<|
-Check sum value is 2851602432.000000 
-Check sum of image validated 
+Op fusion on GPU Time elapsed 0.000044 sec
+Check sum value is 2851602432.000000
+Check sum of image validated
 |>>>>>>------dst data with size=[32,64,56,56]--------<<<<<<|
-Op fusion on CPU Time elapsed 0.081029 sec
-The checksum after the max_pool is 725745664.000000 
+Op fusion on CPU Time elapsed 0.140381 sec
+The checksum after the max_pool is 720978944.000000
+
 
 ```
 
