@@ -51,6 +51,7 @@ The checksum after the max_pool is 720978944.000000
 #define POOL_HEIGHT     3
 
 ```
+
 ### Perfomance analysis
 The max_pooling op and an element-wise add op are fused and implemented in two way：C and CUDA C, where the C version is accelerated by openMP. The runtimes of the different versions of the implementation are as follows:
 
@@ -60,7 +61,7 @@ The max_pooling op and an element-wise add op are fused and implemented in two w
 
 As you can see from the time dimension, the CUDA C version is more than eight thousand times faster than the C version with openMP, and C with openMP is more than three times faster than the pure C version.
 
-Similarly, the performance of the c version of the program can be analysis via gprof：
+Similarly, the performance of the C version of the program can be analysis via gprof：
 ```python
 cgrad$ gprof cgrad gmon.out -p
 Flat profile:
@@ -78,6 +79,30 @@ Each sample counts as 0.01 seconds.
 
  %         the percentage of the total running time of the
 time       program used by this function.
+```
+and the CUDA C version of the program can be analysis via nvprof：
+```python
+cgrad$ nvprof ./cgrad
+==32982== NVPROF is profiling process 32982, command: ./cgrad
+==32982== Profiling application: ./cgrad
+==32982== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   61.75%  64.070ms         2  32.035ms  20.283ms  43.787ms  [CUDA memcpy HtoD]
+                   37.46%  38.868ms         1  38.868ms  38.868ms  38.868ms  [CUDA memcpy DtoH]
+                    0.80%  827.23us         1  827.23us  827.23us  827.23us  forward_maxpool_plus_add_fusion_layer_kernel(int, int, int, int, int, int, int, double*, double*, double*)
+      API calls:   70.99%  263.41ms         3  87.803ms  175.99us  263.05ms  cudaMalloc
+                   28.29%  104.96ms         3  34.987ms  20.551ms  43.963ms  cudaMemcpy
+                    0.25%  925.48us         3  308.49us  224.31us  424.98us  cuDeviceTotalMem
+                    0.23%  852.15us         2  426.07us  6.1070us  846.04us  cudaDeviceSynchronize
+                    0.21%  772.21us       288  2.6810us     164ns  116.64us  cuDeviceGetAttribute
+                    0.02%  82.685us         3  27.561us  22.842us  36.873us  cuDeviceGetName
+                    0.01%  49.258us         1  49.258us  49.258us  49.258us  cudaLaunchKernel
+                    0.00%  14.523us         3  4.8410us  1.4280us  10.497us  cuDeviceGetPCIBusId
+                    0.00%  1.7160us         6     286ns     164ns     803ns  cuDeviceGet
+                    0.00%  1.1850us         3     395ns     220ns     716ns  cuDeviceGetCount
+                    0.00%     862ns         3     287ns     252ns     351ns  cuDeviceGetUuid
+                    0.00%     375ns         1     375ns     375ns     375ns  cudaPeekAtLastError
+                    0.00%     317ns         1     317ns     317ns     317ns  cudaGetLastError
 ```
   ### Features
 - [x] # Forward :tada:
