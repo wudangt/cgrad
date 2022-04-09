@@ -118,6 +118,7 @@ cgrad$ nvprof ./cgrad
                     0.00%     375ns         1     375ns     375ns     375ns  cudaPeekAtLastError
                     0.00%     317ns         1     317ns     317ns     317ns  cudaGetLastError
 ```
+From the output of the above analysis tool, it can be seen that the bottleneck of the pure C version of the code is that it cannot take advantage of the multi-threading of the cpu resulting in a large computational overhead of the operator, while the CUDA C version of the code can take full advantage of the multi-threading of the GPU with a smaller computational overhead, but at the same time the transfer of data between the host and the device takes up most of the time.
   ### Features
 - [x] # Forward :tada:
 - [x] # OpenMP :tada:
