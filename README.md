@@ -10,9 +10,24 @@
     `Formula: dst[32,64,56,56] = max_pooling(src1[32,64,112,112]) + src2[32,1,56,56]`
 
 ### Installation
+#### Compiling With pure C
 ```bash
 git clone https://github.com/wudangt/cgrad.git
 cd cgrad
+make
+./cgrad
+
+#### Compiling With openMP
+change the first line of the makefile to use GPU compilation
+vim Makefile
+OPENMP=1
+make
+./cgrad
+
+#### Compiling With CUDA
+If you want to use openMP, you can change the first line of the makefile to compile with openMP
+vim Makefile
+GPU=1
 make
 ./cgrad
 ```
