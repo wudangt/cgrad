@@ -86,6 +86,23 @@ void print_max_pool_plus_add_checksum(int batch, int channels, int height, int w
   	printf("The checksum after the max_pool is %lf \n",sum);
 }
 
+double max_pool_plus_add_checksum(int batch, int channels, int height, int width, double *output_pointer){
+	double sum = 0.0;
+	for(int n= 0;n<batch;n++){
+		for(int k = 0; k < channels; k++)
+			for(int i = 0; i < height; i++){
+	  			for(int j = 0; j < width; j++){
+	  			{
+	  				int index = n*channels*height*width + i*width + j + k*width*height;
+	  				sum = sum + output_pointer[index];
+	  			}
+	  		}
+	  	}
+	}
+	return sum;
+}
+
+
 
 void print_data(int batch, int channels,int height,int width, double *image_pointer){
 	for(int b = 0;b<batch;b++){
