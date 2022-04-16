@@ -3,7 +3,7 @@
 #include <float.h>
 
 
-void forward_maxpool_plus_add_fusion_layer(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, double *src1_pointer, double *src2_pointer, double *dst_pointer)
+void forward_maxpool_plus_add_fusion_layer(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer)
 {
     int b,i,j,k,m,n;
     int h = (in_h + 2*pad - size)/stride + 1;

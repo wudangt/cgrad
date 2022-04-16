@@ -8,15 +8,15 @@ void error(const char *s)
     exit(-1);
 }
 
-double cpuSecond(){
+float cpuSecond(){
 	struct timeval tp;
 	gettimeofday(&tp,NULL);
-	return ((double)tp.tv_sec +(double)tp.tv_usec*1.e-6);
+	return ((float)tp.tv_sec +(float)tp.tv_usec*1.e-6);
 }
 
-void initial_src1(int batch, int channels, int height, int width, double *image_pointer)
+void initial_src1(int batch, int channels, int height, int width, float *image_pointer)
 {
-  int image_memory_size = batch*channels*height*width*sizeof(double);
+  int image_memory_size = batch*channels*height*width*sizeof(float);
   memset(image_pointer, 0, image_memory_size);
   	for(int b = 0; b<batch;b++){	
 	  for(int k = 0; k < channels; k++){
@@ -30,9 +30,9 @@ void initial_src1(int batch, int channels, int height, int width, double *image_
 	}
 }
 
-void initial_src2(int batch, int channels, int height, int width, double *image_pointer)
+void initial_src2(int batch, int channels, int height, int width, float *image_pointer)
 {
-	int image_memory_size = batch*channels*height*width*sizeof(double);
+	int image_memory_size = batch*channels*height*width*sizeof(float);
 	memset(image_pointer, 0, image_memory_size);
 	for(int b = 0; b<batch; b++){	
 	  for(int k = 0; k < channels; k++){
@@ -46,8 +46,8 @@ void initial_src2(int batch, int channels, int height, int width, double *image_
 	}
 }
 
-void validate_src_data(int batch, int channels, int height, int width, double *image_pointer){
-	double sum = 0.0;
+void validate_src_data(int batch, int channels, int height, int width, float *image_pointer){
+	float sum = 0.0;
 	for(int b =0; b<batch;b++){
 		for(int k = 0; k < channels; k++)
 			for(int i = 0; i < height; i++){
@@ -70,8 +70,8 @@ void validate_src_data(int batch, int channels, int height, int width, double *i
   	}
 }
 
-void print_max_pool_plus_add_checksum(int batch, int channels, int height, int width, double *output_pointer){
-	double sum = 0.0;
+void print_max_pool_plus_add_checksum(int batch, int channels, int height, int width, float *output_pointer){
+	float sum = 0.0;
 	for(int n= 0;n<batch;n++){
 		for(int k = 0; k < channels; k++)
 			for(int i = 0; i < height; i++){
@@ -86,8 +86,8 @@ void print_max_pool_plus_add_checksum(int batch, int channels, int height, int w
   	printf("The checksum after the max_pool is %lf \n",sum);
 }
 
-double max_pool_plus_add_checksum(int batch, int channels, int height, int width, double *output_pointer){
-	double sum = 0.0;
+float max_pool_plus_add_checksum(int batch, int channels, int height, int width, float *output_pointer){
+	float sum = 0.0;
 	for(int n= 0;n<batch;n++){
 		for(int k = 0; k < channels; k++)
 			for(int i = 0; i < height; i++){
@@ -104,7 +104,7 @@ double max_pool_plus_add_checksum(int batch, int channels, int height, int width
 
 
 
-void print_data(int batch, int channels,int height,int width, double *image_pointer){
+void print_data(int batch, int channels,int height,int width, float *image_pointer){
 	for(int b = 0;b<batch;b++){
 		int b_offset  = b*channels*height*width;
 		for(int c = 0; c < channels; c++){

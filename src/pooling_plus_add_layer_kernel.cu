@@ -5,7 +5,7 @@ extern "C" {
 	#include "pooling_plus_add_layer.h"
 	#include "cuda.h"
 }
-__global__ void forward_maxpool_plus_add_fusion_layer_kernel(int n, int in_h, int in_w, int in_c, int stride, int size, int pad, double *src1_pointer, double *src2_pointer, double *dst_pointer)
+__global__ void forward_maxpool_plus_add_fusion_layer_kernel(int n, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer)
 {
     int h = (in_h + 2*pad - size)/stride + 1;
     int w = (in_w + 2*pad - size)/stride + 1;
@@ -27,7 +27,7 @@ __global__ void forward_maxpool_plus_add_fusion_layer_kernel(int n, int in_h, in
 
     int src1_index = j + w*(i + h*(k + c*b));
     int src2_index = j + w*(i + h*(k + b)); 
-    double max = 0;
+    float max = 0;
     int l, m;
     for(l = 0; l < size; ++l){
         for(m = 0; m < size; ++m){
@@ -36,7 +36,7 @@ __global__ void forward_maxpool_plus_add_fusion_layer_kernel(int n, int in_h, in
             int index = cur_w + in_w*(cur_h + in_h*(k + b*in_c));
             int valid = (cur_h >= 0 && cur_h < in_h &&
                     cur_w >= 0 && cur_w < in_w);
-            double val = (valid != 0) ? src1_pointer[index] : -INFINITY;
+            float val = (valid != 0) ? src1_pointer[index] : -INFINITY;
             max   = (val > max) ? val   : max;
         }
     }
@@ -44,7 +44,7 @@ __global__ void forward_maxpool_plus_add_fusion_layer_kernel(int n, int in_h, in
 }
 
 
-extern void forward_maxpool_plus_add_fusion_layer_gpu(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, double *src1_pointer, double *src2_pointer, double *dst_pointer)
+extern void forward_maxpool_plus_add_fusion_layer_gpu(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer)
 {
    
     int out_h = (in_h + 2*pad - size)/stride + 1;
