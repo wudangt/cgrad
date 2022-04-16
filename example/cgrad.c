@@ -21,8 +21,7 @@
 #define POOL_SIZE  3
 
 extern double cpuSecond();
-extern void initial_src1(int batch, int channels, int height, int width, float *image_pointer);
-extern void initial_src2(int batch, int channels, int height, int width, float *image_pointer);
+extern void initial_src(int batch, int channels, int height, int width, float *image_pointer, int value);
 extern void validate_src_data(int batch, int channels, int height, int width, float *image_pointer);
 extern void print_data(int batch, int channels,int height,int width, float *image_pointer);
 extern void print_max_pool_plus_add_checksum(int batch, int channels, int height, int width, float *output_pointer);
@@ -50,8 +49,8 @@ int main(int ac, char *av[]){
 	memset(dst_pointer, 0, dst_size);
 	memset(output_pointer, 0, src2_size);
 	
-	initial_src1(SRC1_BATCH, SRC1_CHANNELS, SRC1_HEIGHT, SRC1_WIDTH, src1_pointer);
-	initial_src2(SRC2_BATCH, SRC2_CHANNELS, pooled_height, pooled_width, src2_pointer);
+	initial_src(SRC1_BATCH, SRC1_CHANNELS, SRC1_HEIGHT, SRC1_WIDTH, src1_pointer, 5);
+	initial_src(SRC2_BATCH, SRC2_CHANNELS, pooled_height, pooled_width, src2_pointer, 1);
 	cudaMalloc((void **)&gpu_src1_pointer, src1_size);	
 	cudaMalloc((void **)&gpu_src2_pointer, src2_size);
 	cudaMalloc((void **)&gpu_output_pointer, src2_size);

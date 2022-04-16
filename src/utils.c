@@ -14,23 +14,8 @@ double cpuSecond(){
 	return ((double)tp.tv_sec +(double)tp.tv_usec*1.e-6);
 }
 
-void initial_src1(int batch, int channels, int height, int width, float *image_pointer)
-{
-  int image_memory_size = batch*channels*height*width*sizeof(float);
-  memset(image_pointer, 0, image_memory_size);
-  	for(int b = 0; b<batch;b++){	
-	  for(int k = 0; k < channels; k++){
-	  	for(int i = 0; i < height; i++){
-	  		for(int j = 0; j < width; j++){
-	  			int index = b*channels*height*width + i*width + j + k*height*width;
-	  			image_pointer[index] =5;
-	  		}
-	  	}
-	  }
-	}
-}
 
-void initial_src2(int batch, int channels, int height, int width, float *image_pointer)
+void initial_src(int batch, int channels, int height, int width, float *image_pointer, int value)
 {
 	int image_memory_size = batch*channels*height*width*sizeof(float);
 	memset(image_pointer, 0, image_memory_size);
@@ -39,7 +24,7 @@ void initial_src2(int batch, int channels, int height, int width, float *image_p
 	  	for(int i = 0; i < height; i++){
 	  		for(int j = 0; j < width; j++){
 	  			int index = b*channels*height*width + i*width + j + k*height*width;
-	  			image_pointer[index] = 1.0;
+	  			image_pointer[index] = value;
 	  		}
 	  	}
 	  }
