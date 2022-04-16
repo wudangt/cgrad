@@ -1,6 +1,6 @@
 GPU=1
 CUDNN=0
-OPENMP=0
+OPENMP=1
 ARCH= -gencode arch=compute_52,code=compute_52
 
 
