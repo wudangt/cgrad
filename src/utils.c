@@ -23,7 +23,7 @@ void initial_src1(int batch, int channels, int height, int width, float *image_p
 	  	for(int i = 0; i < height; i++){
 	  		for(int j = 0; j < width; j++){
 	  			int index = b*channels*height*width + i*width + j + k*height*width;
-	  			image_pointer[index] = (i+j);
+	  			image_pointer[index] =5;
 	  		}
 	  	}
 	  }
@@ -59,12 +59,12 @@ void validate_src_data(int batch, int channels, int height, int width, float *im
 	  		}
 	  	}
 	}
-  	printf("Check sum value is %lf \n",sum);
+  	printf("Check sum value is %f \n",sum);
   	if(sum == 2851602432.000000){
   		printf("Check sum of image validated \n");
   	}
   	else{
-  		printf("Check sum is wrong %lf \n",sum);
+  		printf("Check sum is wrong %f \n",sum);
   		printf("Exiting program \n");
   		// exit(0);
   	}
@@ -83,7 +83,7 @@ void print_max_pool_plus_add_checksum(int batch, int channels, int height, int w
 	  		}
 	  	}
 	}
-  	printf("The checksum after the max_pool is %lf \n",sum);
+  	printf("The checksum after the max_pool is %f \n",sum);
 }
 
 float max_pool_plus_add_checksum(int batch, int channels, int height, int width, float *output_pointer){

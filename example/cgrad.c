@@ -26,7 +26,7 @@ extern void initial_src2(int batch, int channels, int height, int width, float *
 extern void validate_src_data(int batch, int channels, int height, int width, float *image_pointer);
 extern void print_data(int batch, int channels,int height,int width, float *image_pointer);
 extern void print_max_pool_plus_add_checksum(int batch, int channels, int height, int width, float *output_pointer);
-extern void forward_maxpool_plus_add_fusion_layer(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer);
+extern void forward_maxpool_plus_add_fusion_layer(int batch, int src1_in_h, int src1_in_w, int src1_in_c, int src2_in_h, int src2_in_w, int src2_in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer);
 extern  void forward_maxpool_plus_add_fusion_layer_gpu(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer);
 
 int main(int ac, char *av[]){
@@ -70,7 +70,7 @@ int main(int ac, char *av[]){
 	cudaMemcpy(output_pointer, gpu_output_pointer, src2_size, cudaMemcpyDeviceToHost);
 	cudaDeviceSynchronize();
 	double iStart_cpu = cpuSecond();
-	forward_maxpool_plus_add_fusion_layer(SRC1_BATCH, SRC1_HEIGHT,SRC1_WIDTH, SRC1_CHANNELS, STRIDE, POOL_SIZE, PADDING, src1_pointer, src2_pointer, dst_pointer);
+	forward_maxpool_plus_add_fusion_layer(SRC1_BATCH, SRC1_HEIGHT,SRC1_WIDTH, SRC1_CHANNELS, SRC2_HEIGHT, SRC2_WIDTH, SRC2_CHANNELS, STRIDE, POOL_SIZE, PADDING, src1_pointer, src2_pointer, dst_pointer);
 
 	double iElaps_cpu = cpuSecond()-iStart_cpu;
 	
