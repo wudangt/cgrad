@@ -1,4 +1,4 @@
-float cpuSecond();
+double cpuSecond();
 void initial_src1(int batch, int channels, int height, int width, float *image_pointer);
 void initial_src2(int batch, int channels, int height, int width, float *image_pointer);
 void validate_src_data(int batch, int channels, int height, int width, float *image_pointer);

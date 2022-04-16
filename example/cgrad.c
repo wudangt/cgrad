@@ -20,7 +20,7 @@
 #define STRIDE      2
 #define POOL_SIZE  3
 
-extern float cpuSecond();
+extern double cpuSecond();
 extern void initial_src1(int batch, int channels, int height, int width, float *image_pointer);
 extern void initial_src2(int batch, int channels, int height, int width, float *image_pointer);
 extern void validate_src_data(int batch, int channels, int height, int width, float *image_pointer);
@@ -62,17 +62,17 @@ int main(int ac, char *av[]){
 	printf("|>>>>>>------scr2 data with size=[%d,%d,%d,%d]--------<<<<<<|\n",SRC2_BATCH, SRC2_CHANNELS, pooled_height, pooled_width);
 	//print_data(SRC2_BATCH, SRC2_CHANNELS, pooled_height, pooled_width, src2_pointer);
 
-	float iStart_gpu = cpuSecond();
+	double iStart_gpu = cpuSecond();
 	forward_maxpool_plus_add_fusion_layer_gpu(SRC1_BATCH, SRC1_HEIGHT, SRC1_WIDTH, SRC1_CHANNELS, STRIDE, POOL_SIZE, PADDING, gpu_src1_pointer, gpu_src2_pointer, gpu_output_pointer);
-	float iElaps_gpu = cpuSecond()-iStart_gpu;	
+	double iElaps_gpu = cpuSecond()-iStart_gpu;	
 	printf("Op fusion on GPU Time elapsed %f sec\n", iElaps_gpu);
 	cudaDeviceSynchronize();
 	cudaMemcpy(output_pointer, gpu_output_pointer, src2_size, cudaMemcpyDeviceToHost);
 	cudaDeviceSynchronize();
-	float iStart_cpu = cpuSecond();
+	double iStart_cpu = cpuSecond();
 	forward_maxpool_plus_add_fusion_layer(SRC1_BATCH, SRC1_HEIGHT,SRC1_WIDTH, SRC1_CHANNELS, STRIDE, POOL_SIZE, PADDING, src1_pointer, src2_pointer, dst_pointer);
 
-	float iElaps_cpu = cpuSecond()-iStart_cpu;
+	double iElaps_cpu = cpuSecond()-iStart_cpu;
 	
 	validate_src_data(SRC1_BATCH, SRC1_CHANNELS, SRC1_HEIGHT, SRC1_WIDTH, src1_pointer);
 	printf("|>>>>>>------dst data with size=[%d,%d,%d,%d]--------<<<<<<|\n",SRC1_BATCH, SRC1_CHANNELS, pooled_height, pooled_width);

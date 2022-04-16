@@ -8,10 +8,10 @@ void error(const char *s)
     exit(-1);
 }
 
-float cpuSecond(){
+double cpuSecond(){
 	struct timeval tp;
 	gettimeofday(&tp,NULL);
-	return ((float)tp.tv_sec +(float)tp.tv_usec*1.e-6);
+	return ((double)tp.tv_sec +(double)tp.tv_usec*1.e-6);
 }
 
 void initial_src1(int batch, int channels, int height, int width, float *image_pointer)
