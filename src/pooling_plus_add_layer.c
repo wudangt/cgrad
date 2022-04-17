@@ -16,7 +16,7 @@ void forward_maxpool_plus_add_fusion_layer(int batch, int src1_in_h, int src1_in
                 for(j = 0; j < w; ++j){
                     int src1_index = j + w*(i + h*(k + src1_in_c*b));  
                     int src2_index = (j + src2_in_w)%src2_in_w + src2_in_w*( (i + src2_in_h)%src2_in_h + src2_in_h*( (k + src2_in_c)%src2_in_c + src2_in_c*b));
-		    __m128 max = _mm_set1_ps(-12102203.2f);
+		    __m128 max = _mm_set1_ps(-FLT_MAX);
 		    int s_start  = (i == 0 || j == 0) ? 0 : (size - stride);
                     #pragma unroll
 		    for(n = s_start; n < size; n+=2){
@@ -37,7 +37,7 @@ void forward_maxpool_plus_add_fusion_layer(int batch, int src1_in_h, int src1_in
 			    __m128 vdata_3 = _mm_loadu_ps((float*) &src1_pointer[index_d]);
 			    __m128 max_temp = _mm_max_ps(vdata_1, vdata_2);
 			    max_temp = _mm_max_ps(max_temp, vdata_3);
-                            __m128 val = (valid != 0) ?  max_temp : _mm_set1_ps(-12102203.2f);
+                            __m128 val = (valid != 0) ?  max_temp : _mm_set1_ps(-FLT_MAX);
 			     max = _mm_max_ps(val, max);
 			    
                         }
