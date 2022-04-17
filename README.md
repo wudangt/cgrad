@@ -74,9 +74,10 @@ The max_pooling op and an element-wise add op are fused and implemented in two w
 <p align="center">
   <img src="https://raw.githubusercontent.com/wudangt/cgrad/master/images/result.png" width = "80%" height = "80%">
 </p>
-| \ | C  | C (openMP)  |CUDA C  |
-| :-----: | :-: | :-: |:-: |
-| Seconds | 0.140381 sec| 0.037699 sec |0.000044 sec |
+
+| \ | C(without op fusion)  | C (without openMP)  | C (openMP + SSE) |C (openMP) |CUDA C|
+| :-----: | :-: | :-: |:-: |:-: |:-: |
+| Seconds | 0.0907247 sec| 0.0895203 sec |0.0312469 sec |0.019758 sec |0.0000208 sec |
 
 As you can see from the time dimension, the CUDA C version is more than eight thousand times faster than the C version with openMP, and C with openMP is more than three times faster than the pure C version.
 
