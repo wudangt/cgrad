@@ -69,7 +69,9 @@ The checksum after the max_pool is 720978944.000000
 ### Perfomance analysis
 
 The max_pooling op and an element-wise add op are fused and implemented in two way：C and CUDA C, where the C version is accelerated by openMP. The runtimes of the different versions of the implementation are as follows (Please kindly note that all code is tested on Intel(R) Xeon(R) Gold 5115 CPU @ 2.40GHz and Tesla P100 PCIe 16GB, using input size (32,64,112,112), pooling size (3,3) for performance analysis):
-
+<p align="center">
+  <img src="https://raw.githubusercontent.com/wudangt/cgrad/master/images/result.png" width = "70%" height = "70%">
+</p>
 | \ | C  | C (openMP)  |CUDA C  |
 | :-----: | :-: | :-: |:-: |
 | Seconds | 0.140381 sec| 0.037699 sec |0.000044 sec |
