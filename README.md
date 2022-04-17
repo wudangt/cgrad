@@ -31,18 +31,20 @@ GPU=1
 make
 ./cgrad
 ```
+
 ### Output
 
 ```python
 |>>>>>>------scr1 data with size=[32,64,112,112]--------<<<<<<|
 |>>>>>>------scr2 data with size=[32,1,56,56]--------<<<<<<|
-Op fusion on GPU Time elapsed 0.000044 sec
-Check sum value is 2851602432.000000
+Op fusion on GPU Time elapsed 0.000021 sec
+Check sum value is 128450560.000000
 Check sum of image validated
 |>>>>>>------dst data with size=[32,64,56,56]--------<<<<<<|
-Op fusion on CPU Time elapsed 0.140381 sec
-The checksum after the max_pool is 720978944.000000
-
+Op  on CPU Time elapsed 0.084639 sec
+Op fusion on CPU Time elapsed 0.038689 sec
+The checksum after the max_pool is 38535168.000000
+The checksum after the max_pool is 38535168.000000
 
 ```
 
