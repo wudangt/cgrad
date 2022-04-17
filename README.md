@@ -70,7 +70,7 @@ The checksum after the max_pool is 38535168.000000
 
 ### Perfomance analysis
 
-The max_pooling op and an element-wise add op are fused and implemented in two way：C and CUDA C, where the C version is accelerated by openMP. The runtimes of the different versions of the implementation are as follows (Please kindly note that all code is tested on Intel(R) Xeon(R) Gold 5115 CPU @ 2.40GHz and Tesla P100 PCIe 16GB, using input size (32,64,112,112), pooling size (3,3) for performance analysis):
+The max_pooling op and an element-wise add op are fused and implemented in two way：C and CUDA C, where the C version are accelerated by openMP and SSE (Streaming SIMD Extensions). The runtimes of the different versions of the implementation are as follows (Please kindly note that all code is tested on Intel(R) Xeon(R) Gold 5115 CPU @ 2.40GHz and Tesla P100 PCIe 16GB, using input size (32,64,112,112), pooling size (3,3) for performance analysis):
 <p align="center">
   <img src="https://raw.githubusercontent.com/wudangt/cgrad/master/images/result.png" width = "80%" height = "80%">
 </p>
@@ -79,7 +79,15 @@ The max_pooling op and an element-wise add op are fused and implemented in two w
 | :-----: | :-: | :-: |:-: |:-: |:-: |
 | Seconds | 0.0907247 sec| 0.0895203 sec |0.0312469 sec |0.019758 sec |0.0000208 sec |
 
-As you can see from the time dimension, the CUDA C version is more than eight thousand times faster than the C version with openMP, and C with openMP is more than three times faster than the pure C version.
+The first five figures above give a line chart of the time cost of running the program 10 cycles, and the last one shows the time cost of all methods(The blow table gives the average time cost for the 10 cycles). 
+
+As you can see from the single chart, for each execution, the time is not the same due to OS scheduling, any I/O that might be happening at around that time. From the time dimension, the CUDA C version is more than one thousand times faster than the C version with openMP, and C with openMP is more than one times faster than the  C (openMP + SSE) version, which may be due to the fact that using SSE will result in a significant overhead in writing data to the cache, and that the data is already read per line and locality is satisfied. There is no doubt that C using the openmp is better than C not using openmp owing to parallelism. Similarly, the program for operator fusion takes less time to execute than the program without operator fusion due to the fewer number of data reads and loops. However, we can see that openmp does not result in a linear decrease in program runtime, probably due to the following facts：
+
+- To create a thread O/S need to allocate memory to each thread which take time (even though it is tiny bit.)
+
+- To create multi threads it needs context switching which also take time.
+
+- Need to release memory allocated to threads which also take time.
 
 Similarly, the performance of the C version of the program can be analysis via gprof：
 ```python
@@ -132,6 +140,7 @@ From the output of the above analysis tool, it can be seen that the bottleneck o
 - [x] # Unit Test (need to add more unit test) :tada:
 - [x] # cuda extension :tada:
 - [x] # cache locality :tada:
+- [x] Streaming SIMD Extensions
 - [ ] # backward
 - [ ] # SIMD
 - [ ] # memory management
