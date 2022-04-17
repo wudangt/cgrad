@@ -75,7 +75,7 @@ The max_pooling op and an element-wise add op are fused and implemented in two w
   <img src="https://raw.githubusercontent.com/wudangt/cgrad/master/images/result.png" width = "80%" height = "80%">
 </p>
 
-| \ | C(without op fusion)  | C (without openMP)  | C (openMP + SSE) |C (openMP) |CUDA C|
+| \ | C (without op fusion)  | C (without openMP)  | C (openMP + SSE) |C (openMP) |CUDA C|
 | :-----: | :-: | :-: |:-: |:-: |:-: |
 | Seconds | 0.0907247 sec| 0.0895203 sec |0.0312469 sec |0.019758 sec |0.0000208 sec |
 
