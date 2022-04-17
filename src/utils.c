@@ -45,7 +45,7 @@ void validate_src_data(int batch, int channels, int height, int width, float *im
 	  	}
 	}
   	printf("Check sum value is %f \n",sum);
-  	if(sum == 2851602432.000000){
+  	if(sum == 128450560.000000){
   		printf("Check sum of image validated \n");
   	}
   	else{

@@ -29,6 +29,7 @@ extern void forward_maxpool_plus_add_fusion_layer(int batch, int src1_in_h, int 
 extern void forward_maxpool_plus_add_fusion_layer_gpu(int batch, int src1_in_h, int src1_in_w, int src1_in_c, int src2_in_h, int src2_in_w, int src2_in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer);
 //extern  void forward_maxpool_plus_add_fusion_layer_gpu(int batch, int in_h, int in_w, int in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer);
 int main(int ac, char *av[]){
+	static_assert(sizeof(int) >= 4, "Interger should have at least 4.");
 	int pooled_height = (SRC1_HEIGHT + 2*PADDING - POOL_SIZE)/2 + 1;
         int pooled_width = (SRC1_WIDTH + 2*PADDING - POOL_SIZE)/2 + 1;
 	int pooled_size = SRC1_BATCH*SRC1_CHANNELS*pooled_height*pooled_width*sizeof(float);	

@@ -1,10 +1,11 @@
+#define NDEBUG
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <pthread.h>
 #include <sys/time.h>
-
+#include <assert.h>
 #ifdef GPU
     #define BLOCK 512
       #include <cuda_runtime.h>

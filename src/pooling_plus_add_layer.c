@@ -3,7 +3,17 @@
 #include <float.h>
 #include <pmmintrin.h>
 void forward_maxpool_plus_add_fusion_layer(int batch, int src1_in_h, int src1_in_w, int src1_in_c, int src2_in_h, int src2_in_w, int src2_in_c, int stride, int size, int pad, float *src1_pointer, float *src2_pointer, float *dst_pointer)
-{
+{  
+    assert(NULL = src1_pointer); 
+    assert(NULL = src2_pointer); 
+    assert(NULL = dst_pointer);
+    assert(batch>0);
+    assert(src1_in_h > src2_in_h);
+    assert(src1_in_w > src2_in_w);
+    assert(src1_in_c > src2_in_c);
+    assert(stride > 0);
+    assert(size >= 2);
+    assert(pad > 0);
     int b,i,j,k,m,n;
     int h = (src1_in_h + 2*pad - size)/stride + 1;
     int w = (src1_in_w + 2*pad - size)/stride + 1;
