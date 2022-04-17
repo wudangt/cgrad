@@ -131,12 +131,11 @@ From the output of the above analysis tool, it can be seen that the bottleneck o
 - [x] # op fusion :tada:
 - [x] # Unit Test (need to add more unit test) :tada:
 - [x] # cuda extension :tada:
+- [x] # cache locality :tada:
 - [ ] # backward
 - [ ] # SIMD
-- [ ] # cache locality  
 - [ ] # memory management
 ### Future Work
-- [ ] # How to use the data that is overlapped in the pooling process
 - [ ] # Embedded as an operator in a Pytorch framework 
 - [ ] # May be with Low precision BF16?
 - [ ] # Shared memory
